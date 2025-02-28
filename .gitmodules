@@ -4,3 +4,9 @@
 [submodule "mossCore"]
 	path = mossCore
 	url = https://github.com/coding610/mossCore
+[submodule "mossUI"]
+	path = mossUI
+	url = https://github.com/coding610/mossUI
+[submodule "mossBuilder"]
+	path = mossBuilder
+	url = https://github.com/coding610/mossBuilder
