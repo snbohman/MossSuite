@@ -1,0 +1,6 @@
+[submodule "mossSandbox"]
+	path = mossSandbox
+	url = https://github.com/coding610/mossSandbox
+[submodule "mossCore"]
+	path = mossCore
+	url = https://github.com/coding610/mossCore
