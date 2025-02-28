@@ -1,1 +1,4 @@
-# Moss
+# Moss Game Engine
+Moss is a modular, performance-focused game engine built with C++ for core game logic and Python for an intuitive user interface. While the engine is primarily developed by me, it leverages existing libraries to handle key features such as rendering, entity management, and input management, allowing for faster development and a more robust foundation. One could consider it a wrapper of some sort, as it builds on a already stable foundation, and I agree. I would never take the full honor of building moss from scratch, but the parts I did develop I believe managed this to be a useful engine, or wrapper if you insist.
+
+Moss aims to provide a flexible, data-driven approach to game development, enabling easy configuration through JSON files while maintaining the power and performance of C++. The user interface is designed to allow developers to manage game entities, components, and settings without needing to directly interact with the C++ code.
