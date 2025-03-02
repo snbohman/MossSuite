@@ -3,7 +3,7 @@
 	url = https://github.com/coding610/mossSandbox
 [submodule "mossCore"]
 	path = mossCore
-	url = git@github.com:coding610/mossCore.git
+	url = https://github.com/coding610/mossCore
 [submodule "mossUI"]
 	path = mossUI
 	url = https://github.com/coding610/mossUI
