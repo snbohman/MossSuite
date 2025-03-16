@@ -10,12 +10,16 @@ endif
 
 ifeq ($(config),debug)
   mossCore_config = debug
+  hexagon_config = debug
+  minimal_config = debug
 endif
 ifeq ($(config),release)
   mossCore_config = release
+  hexagon_config = release
+  minimal_config = release
 endif
 
-PROJECTS := mossCore
+PROJECTS := mossCore hexagon minimal
 
 .PHONY: all clean help $(PROJECTS) 
 
@@ -27,8 +31,22 @@ ifneq (,$(mossCore_config))
 	@${MAKE} --no-print-directory -C . -f mossCore.make config=$(mossCore_config)
 endif
 
+hexagon: mossCore
+ifneq (,$(hexagon_config))
+	@echo "==== Building hexagon ($(hexagon_config)) ===="
+	@${MAKE} --no-print-directory -C . -f hexagon.make config=$(hexagon_config)
+endif
+
+minimal: mossCore
+ifneq (,$(minimal_config))
+	@echo "==== Building minimal ($(minimal_config)) ===="
+	@${MAKE} --no-print-directory -C . -f minimal.make config=$(minimal_config)
+endif
+
 clean:
 	@${MAKE} --no-print-directory -C . -f mossCore.make clean
+	@${MAKE} --no-print-directory -C . -f hexagon.make clean
+	@${MAKE} --no-print-directory -C . -f minimal.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -41,5 +59,7 @@ help:
 	@echo "   all (default)"
 	@echo "   clean"
 	@echo "   mossCore"
+	@echo "   hexagon"
+	@echo "   minimal"
 	@echo ""
 	@echo "For more information, see https://github.com/premake/premake-core/wiki"

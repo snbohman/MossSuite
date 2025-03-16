@@ -21,20 +21,20 @@ ifeq ($(config),debug)
     AR = ar
   endif
   RESCOMP = windres
-  TARGETDIR = ../mossCore/bin/debug
-  TARGET = $(TARGETDIR)/libmossCore.a
-  OBJDIR = ../mossCore/build/debug
-  DEFINES += -DDEBUG
-  INCLUDES += -I../mossCore/include -I../mossCore/entt
+  TARGETDIR = ../mossSandbox/bin/debug
+  TARGET = $(TARGETDIR)/hexagon
+  OBJDIR = ../mossSandbox/build/debug/debug/hexagon
+  DEFINES +=
+  INCLUDES += -I../mossSandbox/hexagon/generated/include -I../mossSandbox/hexagon/user/include -I../mossCore/include -I../mossSandbox/entt
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
-  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -g
-  ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -g -std=c++17
+  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64
+  ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -std=c++17
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -lraylib -lfmt
-  LDDEPS +=
-  ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64
-  LINKCMD = $(AR) -rcs "$@" $(OBJECTS)
+  LIBS += ../mossCore/bin/debug/libmossCore.a -lraylib -lfmt
+  LDDEPS += ../mossCore/bin/debug/libmossCore.a
+  ALL_LDFLAGS += $(LDFLAGS) -L../mossCore/bin/debug -L/usr/lib64 -m64
+  LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
   define PREBUILDCMDS
   endef
   define PRELINKCMDS
@@ -57,20 +57,20 @@ ifeq ($(config),release)
     AR = ar
   endif
   RESCOMP = windres
-  TARGETDIR = ../mossCore/bin/release
-  TARGET = $(TARGETDIR)/libmossCore.a
-  OBJDIR = ../mossCore/build/release
-  DEFINES += -DNDEBUG
-  INCLUDES += -I../mossCore/include -I../mossCore/entt
+  TARGETDIR = ../mossSandbox/bin/release
+  TARGET = $(TARGETDIR)/hexagon
+  OBJDIR = ../mossSandbox/build/release/release/hexagon
+  DEFINES +=
+  INCLUDES += -I../mossSandbox/hexagon/generated/include -I../mossSandbox/hexagon/user/include -I../mossCore/include -I../mossSandbox/entt
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
-  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -O2
-  ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -O2 -std=c++17
+  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64
+  ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -std=c++17
   ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-  LIBS += -lraylib -lfmt
-  LDDEPS +=
-  ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -m64
-  LINKCMD = $(AR) -rcs "$@" $(OBJECTS)
+  LIBS += ../mossCore/bin/release/libmossCore.a -lraylib -lfmt
+  LDDEPS += ../mossCore/bin/release/libmossCore.a
+  ALL_LDFLAGS += $(LDFLAGS) -L../mossCore/bin/debug -L/usr/lib64 -m64
+  LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
   define PREBUILDCMDS
   endef
   define PRELINKCMDS
@@ -83,9 +83,10 @@ all: prebuild prelink $(TARGET)
 endif
 
 OBJECTS := \
-	$(OBJDIR)/app.o \
-	$(OBJDIR)/scene.o \
-	$(OBJDIR)/mrls.o \
+	$(OBJDIR)/main.o \
+	$(OBJDIR)/ball.o \
+	$(OBJDIR)/hex.o \
+	$(OBJDIR)/square.o \
 
 RESOURCES := \
 
@@ -97,7 +98,7 @@ ifeq (.exe,$(findstring .exe,$(ComSpec)))
 endif
 
 $(TARGET): $(GCH) ${CUSTOMFILES} $(OBJECTS) $(LDDEPS) $(RESOURCES) | $(TARGETDIR)
-	@echo Linking mossCore
+	@echo Linking hexagon
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
 
@@ -120,7 +121,7 @@ else
 endif
 
 clean:
-	@echo Cleaning mossCore
+	@echo Cleaning hexagon
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(OBJDIR)
@@ -144,13 +145,16 @@ else
 $(OBJECTS): | $(OBJDIR)
 endif
 
-$(OBJDIR)/app.o: ../mossCore/src/core/app.cpp
+$(OBJDIR)/main.o: ../mossSandbox/hexagon/generated/src/main.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/scene.o: ../mossCore/src/core/scene.cpp
+$(OBJDIR)/ball.o: ../mossSandbox/hexagon/user/src/ball.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
-$(OBJDIR)/mrls.o: ../mossCore/src/render/mrls.cpp
+$(OBJDIR)/hex.o: ../mossSandbox/hexagon/user/src/hex.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/square.o: ../mossSandbox/hexagon/user/src/square.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

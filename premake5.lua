@@ -7,9 +7,9 @@ workspace "moss"
     cppdialect "C++17"
 
     flags { "MultiProcessorCompile" }
-    linkoptions { "-fuse-ld=lld" }
+    -- linkoptions { "-fuse-ld=lld" }
 
     include "mossCore/premake5.lua"
     -- include "mossBuilder/premake5.lua"
     -- include "mossUI/premake5.lua"
-    -- include "mossSandbox/premake5.lua"
+    include "mossSandbox/premake5.lua"
