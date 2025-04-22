@@ -1,12 +1,12 @@
-[submodule "mossSandbox"]
-	path = mossSandbox
-	url = https://github.com/coding610/mossSandbox
-[submodule "mossCore"]
-	path = mossCore
+[submodule "core"]
+	path = core
 	url = https://github.com/coding610/mossCore
-[submodule "mossUI"]
-	path = mossUI
+[submodule "ui"]
+	path = ui 
 	url = https://github.com/coding610/mossUI
-[submodule "mossBuilder"]
-	path = mossBuilder
+[submodule "builder"]
+	path = builder 
 	url = https://github.com/coding610/mossBuilder
+[submodule "sandbox"]
+	path = sandbox 
+	url = https://github.com/coding610/mossSandbox
