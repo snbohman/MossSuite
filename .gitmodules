@@ -7,6 +7,3 @@
 [submodule "sandbox"]
 	path = sandbox 
 	url = https://github.com/coding610/mossSandbox
-[submodule "extensions"]
-	path = extensions
-	url = https://github.com/coding610/mossCoreExtensions
