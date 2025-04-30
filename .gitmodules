@@ -1,12 +1,16 @@
 [submodule "core"]
 	path = core
 	url = https://github.com/coding610/mossCore
+    branch = main
 [submodule "ui"]
 	path = ui 
 	url = https://github.com/coding610/mossUI
+    branch = main
 [submodule "sandbox"]
 	path = sandbox 
 	url = https://github.com/coding610/mossSandbox
+    branch = main
 [submodule "extensions"]
 	path = extensions
 	url = https://github.com/snbohman/mossCoreExtensions
+    branch = main
